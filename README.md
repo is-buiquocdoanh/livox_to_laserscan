@@ -47,7 +47,7 @@ ros2 topic echo /scan
 ## Author
 Name: BUI QUOC DOANH
 
-Email: [doanh@example.com]
+Email: doanh762003@gmail.com
 
 Project: go2_unitree
 
