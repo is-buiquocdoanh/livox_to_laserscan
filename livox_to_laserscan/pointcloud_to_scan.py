@@ -16,12 +16,23 @@ class CloudToScan(Node):
         self.angle_increment = math.radians(0.25)
         self.range_min = 0.1
         self.range_max = 40.0
-        self.z_min = 0.25   # m
-        self.z_max = 0.35   # m
+        self.z_min = 0.1   # m
+        self.z_max = 0.15   # m
 
     def cb(self, msg):
         scan = LaserScan()
         scan.header.frame_id = "laser"
+        
+        # --- Thêm timestamp đồng bộ với Livox nhưng có offset nhỏ ---
+        if not hasattr(self, 'scan_seq'):
+            self.scan_seq = 0
+        self.scan_seq += 1
+
+        t = rclpy.time.Time.from_msg(msg.header.stamp)
+        t = t + rclpy.duration.Duration(nanoseconds=self.scan_seq*1000)  # offset 1 µs
+        scan.header.stamp = t.to_msg()
+        # -----------------------------------------------------------
+
         scan.angle_min = self.angle_min
         scan.angle_max = self.angle_max
         scan.angle_increment = self.angle_increment
