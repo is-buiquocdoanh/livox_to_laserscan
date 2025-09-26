@@ -3,6 +3,8 @@
 ## Introduction
 This package converts **Livox LiDAR data** (published by `livox_ros_driver2`) into a **2D LaserScan** message, which can then be used in SLAM or Navigation frameworks in ROS2 (e.g., `slam_toolbox`, `cartographer`, `nav2`).
 
+Because when launching the `msg_MID360.launch.py` ​​​​file of `livox_ros_driver2` by default, it will emit data in the form of `CustomMsg(/livox/lidar)` in this form, it is difficult to process and convert it to `laserscan`. So it is necessary to convert `CustomMsg(/livox/lidar)` to `pointcloud(/livox/points)` and then convert from `pointcloud2` to `laserscan`.
+
 It will:
 - Subcribe `CustomMsg (/livox/lidar)` to convert `pointcloud2 (/livox/points)`
 - Subscribe to `/livox/points` to convert `sensor_msgs/LaserScan`
@@ -43,6 +45,10 @@ ros2 topic list
 ros2 topic echo /scan
 ```
 ![Livox_to_scan](docs/livox_to_scan.gif)
+
+4. SLAM 2D
+
+![Livox Mapping](docs/livox-mapping.gif)
 
 ## Author
 Name: BUI QUOC DOANH
